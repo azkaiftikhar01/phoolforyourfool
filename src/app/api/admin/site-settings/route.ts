@@ -24,6 +24,11 @@ export async function PATCH(req: Request) {
   const body = await req.json().catch(() => null);
   const parsed = Schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "Invalid input" }, { status: 400 });
-  await saveSiteSettings(parsed.data);
-  return NextResponse.json({ ok: true });
+  try {
+    await saveSiteSettings(parsed.data);
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("Failed to save site settings", err);
+    return NextResponse.json({ error: "Could not save site settings" }, { status: 500 });
+  }
 }

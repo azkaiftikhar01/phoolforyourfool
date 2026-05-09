@@ -14,6 +14,7 @@ export function SiteSettingsForm({ initial }: SiteSettingsFormProps) {
   const [s, setS] = useState<SiteSettings>(initial);
   const [submitting, setSubmitting] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   function set<K extends keyof SiteSettings>(key: K, value: SiteSettings[K]) {
     setS((prev) => ({ ...prev, [key]: value }));
@@ -23,14 +24,19 @@ export function SiteSettingsForm({ initial }: SiteSettingsFormProps) {
     e.preventDefault();
     setSubmitting(true);
     setSaved(false);
+    setError(null);
     try {
-      await fetch("/api/admin/site-settings", {
+      const res = await fetch("/api/admin/site-settings", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(s),
       });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error ?? "Could not save settings");
       setSaved(true);
       router.refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not save settings");
     } finally {
       setSubmitting(false);
     }
@@ -110,6 +116,7 @@ export function SiteSettingsForm({ initial }: SiteSettingsFormProps) {
           {submitting ? "Saving..." : "Save settings"}
         </button>
         {saved ? <span className="text-sm text-brand-coral">Saved.</span> : null}
+        {error ? <span className="text-sm text-red-600">{error}</span> : null}
       </div>
     </form>
   );
