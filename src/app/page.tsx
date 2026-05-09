@@ -30,8 +30,10 @@ const FEATURE_HIGHLIGHTS = [
 
 export default async function HomePage() {
   const [featured, settings] = await Promise.all([getFeaturedProducts(4), getSiteSettings()]);
-  const testimonialIds = [1, 2, 3, 4]
-    .map((i) => settings[`testimonial.image.${i}` as const])
+  const testimonialIds = (
+    ["testimonial.image.1", "testimonial.image.2", "testimonial.image.3", "testimonial.image.4"] as const
+  )
+    .map((k) => settings[k])
     .filter(Boolean);
 
   return (
