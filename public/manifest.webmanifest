@@ -1,0 +1,12 @@
+{
+  "name": "Phool For Your Fool",
+  "short_name": "Phool",
+  "description": "Your floral wonderland — bouquets, gajra and more delivered across Pakistan.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F6F3",
+  "theme_color": "#FFB3BA",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

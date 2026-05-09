@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "Poppins", system-ui, -apple-system, sans-serif;
+
+  --color-pink: 255 179 186;
+  --color-peach: 255 203 164;
+  --color-coral: 255 153 153;
+  --color-orange: 255 212 163;
+  --color-cream: 248 246 243;
+  --color-ink: 74 74 74;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-brand-coral/40 text-brand-deep;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight text-brand-deep;
+  }
+
+  /* Larger tap targets on mobile */
+  @media (max-width: 640px) {
+    button,
+    a {
+      min-height: 40px;
+    }
+  }
+
+  /* Prevent iOS Safari from zooming on focused inputs */
+  @media (max-width: 640px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3
+      text-sm font-medium transition-all focus-visible:outline-none
+      focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+      disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand-deep text-white hover:bg-brand-ink;
+  }
+
+  .btn-secondary {
+    @apply btn bg-white text-brand-deep shadow-soft hover:bg-brand-cream;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-brand-deep hover:bg-white/60;
+  }
+
+  .card-soft {
+    @apply rounded-2xl border border-border/60 bg-white/70 p-5 backdrop-blur shadow-card;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-border/70
+      bg-white/80 px-3 py-1 text-xs font-medium text-brand-ink;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-brand-deep
+      placeholder:text-muted-foreground/70 focus:border-brand-coral focus:outline-none
+      focus:ring-2 focus:ring-brand-coral/30;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
